@@ -33,7 +33,16 @@ resource "yandex_compute_instance" "this" {
   }
 
   network_interface {
-    subnet_id = yandex_vpc_subnet.private.id
+    subnet_id      = yandex_vpc_subnet.private.id
+    nat            = true
+    nat_ip_address = yandex_vpc_address.this.external_ipv4_address[0].address
+  }
+
+  metadata = {
+    user-data = templatefile("cloud-init.yaml.tftpl", {
+      ydb_connect_string = yandex_ydb_database_serverless.this.ydb_full_endpoint,
+      bucket_domain_name = yandex_storage_bucket.this.bucket_domain_name
+    })
   }
 }
 
@@ -86,4 +95,11 @@ resource "random_pet" "bucket_name" {
   separator = "-"
   # special = false
   # upper   = false
-} 
+}
+
+resource "yandex_vpc_address" "this" {
+  name = "${local.linux_vm_name}-adress"
+  external_ipv4_address {
+    zone_id = var.zone
+  }
+}
