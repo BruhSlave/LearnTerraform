@@ -29,3 +29,8 @@ output "bucket_name" {
   description = "The name of the Yandex Object Storage bucket."
   value       = yandex_storage_bucket.this.bucket
 } 
+
+output "instance_public_ip_adress" {
+  description = "The external IP address of the instance."
+  value = yandex_compute_instance.this.network_interface.0.nat_ip_address
+}
