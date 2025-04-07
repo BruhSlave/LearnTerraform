@@ -7,6 +7,8 @@ locals {
   bucket_name         = "${var.name_prefix}-terraform-bucket-${random_pet.bucket_name.id}"
 }
 
+
+
 # Создание диска и виртуальной машины
 resource "yandex_compute_disk" "boot_disk" {
   name     = local.boot_disk_name
@@ -28,7 +30,7 @@ resource "yandex_compute_instance" "this" {
     memory = var.instance_resources.memory
   }
 
- labels = {
+  labels = {
     cores  = "${tostring(var.instance_resources.cores)}_cores"
     memory = "${tostring(var.instance_resources.memory)}_GB"
   }
@@ -41,7 +43,7 @@ resource "yandex_compute_instance" "this" {
     nat            = true
     nat_ip_address = yandex_vpc_address.this.external_ipv4_address[0].address
   }
-  
+
 
   metadata = {
     user-data = templatefile("cloud-init.yaml.tftpl", {
