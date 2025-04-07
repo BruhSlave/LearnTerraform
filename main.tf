@@ -28,6 +28,10 @@ resource "yandex_compute_instance" "this" {
     memory = var.instance_resources.memory
   }
 
+ labels = {
+    cores  = "${tostring(var.instance_resources.cores)}_cores"
+    memory = "${tostring(var.instance_resources.memory)}_GB"
+  }
   boot_disk {
     disk_id = yandex_compute_disk.boot_disk.id
   }
@@ -37,6 +41,7 @@ resource "yandex_compute_instance" "this" {
     nat            = true
     nat_ip_address = yandex_vpc_address.this.external_ipv4_address[0].address
   }
+  
 
   metadata = {
     user-data = templatefile("cloud-init.yaml.tftpl", {
@@ -83,7 +88,7 @@ resource "yandex_iam_service_account_static_access_key" "this" {
 
 # Создание бакета 
 resource "yandex_storage_bucket" "this" {
-  bucket     = local.bucket_name
+  bucket     = join("-", [local.bucket_name, "primet-join-funk"])
   access_key = yandex_iam_service_account_static_access_key.this.access_key
   secret_key = yandex_iam_service_account_static_access_key.this.secret_key
 
