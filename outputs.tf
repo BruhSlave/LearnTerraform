@@ -16,21 +16,21 @@ output "subnet_id" {
 output "ydb_id" {
   description = "The ID of the Yandex Managed Service for YDB instance."
   value       = yandex_ydb_database_serverless.this.id
-  sensitive = true
+  sensitive   = true
 }
 
 output "service_account_id" {
   description = "The ID of the Yandex IAM service account."
   value       = yandex_iam_service_account.bucket.id
-  sensitive = true
+  sensitive   = true
 }
 
 output "bucket_name" {
   description = "The name of the Yandex Object Storage bucket."
   value       = yandex_storage_bucket.this.bucket
-} 
+}
 
 output "instance_public_ip_adress" {
   description = "The external IP address of the instance."
-  value = yandex_compute_instance.this.network_interface.0.nat_ip_address
+  value       = yandex_compute_instance.this.network_interface.0.nat_ip_address
 }
