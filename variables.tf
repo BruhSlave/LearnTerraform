@@ -10,10 +10,10 @@ variable "folder_id" {
   type        = string
 }
 
-variable "zone" {
-  description = "(Optional) - YC zone for provisoned resources"
-  type        = string
-  default     = "ru-central1-a"
+variable "zones" {
+  description = "(Optional) - YC Cloud Zones for provisoned resources."
+  type        = set(string)
+  default     = ["ru-central1-a", "ru-central1-b", "ru-central1-c"]
 }
 
 variable "image_id" {
@@ -48,7 +48,9 @@ variable "subnets" {
   description = "(Optional) - A map of subnet names to their CIDR block ranges"
   type        = map(list(string))
   default = {
-    "private-subnet" = ["192.168.10.0/24"]
+    "ru-central1-a" = ["192.168.10.0/24"]
+    "ru-central1-b" = ["192.168.11.0/24"]
+    "ru-central1-c" = ["192.168.12.0/24"]
   }
 }
 
