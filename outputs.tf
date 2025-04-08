@@ -1,28 +1,29 @@
-output "boot_disk" {
-  description = "The ID of the boot disk created for the instance."
-  value       = yandex_compute_disk.boot_disk.id
+# Outputs
+
+output "boot_disk_ids" {
+  description = "The IDs of the boot disks created for the instances."
+  value = {
+    for disk in yandex_compute_disk.boot_disk :
+    disk.name => disk.id...
+  }
 }
 
-output "instance_id" {
-  description = "The ID of the Yandex Compute instance."
-  value       = yandex_compute_instance.this.id
-}
-
-output "subnet_id" {
-  description = "The ID of the VPC subnet used by the Yandex Compute instance."
-  value       = yandex_vpc_subnet.private.id
+output "subnet_ids" {
+  description = "The IDs of the VPC subnets used by the Yandex Compute instances."
+  value = {
+    for subnet in yandex_vpc_subnet.private :
+    subnet.name => subnet.id...
+  }
 }
 
 output "ydb_id" {
   description = "The ID of the Yandex Managed Service for YDB instance."
   value       = yandex_ydb_database_serverless.this.id
-  sensitive   = true
 }
 
 output "service_account_id" {
   description = "The ID of the Yandex IAM service account."
   value       = yandex_iam_service_account.bucket.id
-  sensitive   = true
 }
 
 output "bucket_name" {
@@ -30,7 +31,18 @@ output "bucket_name" {
   value       = yandex_storage_bucket.this.bucket
 }
 
-output "instance_public_ip_adress" {
-  description = "The external IP address of the instance."
-  value       = yandex_compute_instance.this.network_interface.0.nat_ip_address
+output "instance_public_ip_addresses" {
+  description = "The external IP addresses of the instances."
+  value = {
+    for address in yandex_vpc_address.this :
+    address.name => address.external_ipv4_address[0].address...
+  }
+}
+
+output "instance_ids" {
+  description = "The IDs of the Yandex Compute instances."
+  value = {
+    for instance in yandex_compute_instance.this :
+    instance.name => instance.id...
+  }
 }
