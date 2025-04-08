@@ -52,3 +52,38 @@ variable "subnets" {
   }
 }
 
+variable "boot_disk_name" {
+  description = "(Optional) - Name of boot disk"
+  type        = string
+  default     = null
+}
+
+variable "linux_vm_name" {
+  description = "Name of the linux VM"
+  type        = string
+  default     = null
+}
+
+variable "vpc_network_name" {
+  description = "(Optional) - Name of the VPC network"
+  type        = string
+  default     = null
+}
+
+variable "ydb_serverless_name" {
+  description = "(Optional) - Name of the YDB serverless."
+  type        = string
+  default     = null
+}
+
+variable "bucket_sa_name" {
+  description = "(Optional) - Name of the service account for the bucket"
+  type        = string
+  default     = null
+}
+
+variable "bucket_name" {
+  description = "(Optional) - Name of the bucket"
+  type        = string
+  default     = null
+}
