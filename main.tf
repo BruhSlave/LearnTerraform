@@ -1,10 +1,10 @@
 locals {
-  boot_disk_name      = "${var.name_prefix}-boot-disk"
-  linux_vm_name       = "${var.name_prefix}-linux-vm"
-  yandex_vpc_network  = "${var.name_prefix}-private"
-  ydb_serverless_name = "${var.name_prefix}-ybd-serverless"
-  bucket_sa_name      = "${var.name_prefix}-bucket-sa"
-  bucket_name         = "${var.name_prefix}-terraform-bucket-${random_pet.bucket_name.id}"
+  boot_disk_name      = var.boot_disk_name != null ? var.boot_disk_name : "${var.name_prefix}-boot-disk"
+  linux_vm_name       = var.linux_vm_name != null ? var.linux_vm_name : "${var.name_prefix}-linux-vm"
+  yandex_vpc_network  = var.vpc_network_name != null ? var.vpc_network_name : "${var.name_prefix}-private"
+  ydb_serverless_name = var.ydb_serverless_name != null ? var.ydb_serverless_name : "${var.name_prefix}-ydb-serverless"
+  bucket_sa_name      = var.bucket_sa_name != null ? var.bucket_sa_name : "${var.name_prefix}-backet-sa"
+  bucket_name         = var.bucket_name != null ? vat.bucket_name : "${var.name_prefix}-bucket-sa"
 }
 
 
